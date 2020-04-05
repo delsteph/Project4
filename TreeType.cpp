@@ -427,52 +427,89 @@ void TreeType<ItemType>::operator=(const TreeType& originalTree)
 
 
 
+
+int findHeight(TreeNode* tree){ //helper method
+  if(tree == NULL){
+    return -1; //base case
+  }
+  return max(findHeight(tree-> left),findHeight(tree->right)) +1;
+}
+
+
+
 template <class ItemType>
-void TreeType<ItemType>::LevelOrderPrint()const
-{//Implement this function, you May use a data structure
+void TreeType<ItemType>::LevelOrderPrint()const{
 
   QueType A;
   QueType B;
-
   TreeNode* tree = root;
   ItemType item = tree->info;
-  int i;
+  int maxHeight= findHeight(tree);
+   int levelCounter=0;
   A.Enqueue(item);
 
   while(!A.IsEmpty() || !B.IsEmpty()){
-    while(!A.IsEmpty()){ //first case
 
-      
-//    A.Dequeue(tree->info);
-      cout << tree->info << endl;
-      if(tree-> left != NULL){
-
-
+    TreeNode* current;
+    TreeNode* parent;
+    bool found;  
+    while(!A.IsEmpty()){ //first case      
+      A.Dequeue(item);
+      cout << item << " ";
+      findNode(root, item, current, parent, found);
+      if(found){
+	tree=current; //location is set
+	if(tree-> left != NULL){
+	  item = tree->left->info;
+	  B.Enqueue(item);	  
+	}else{
+	  if(levelCounter != maxHeight){ //if not at maxHeight
+	    B.Enqueue(-1);
+	  }
+	}
+	
+	if(tree-> right != NULL){
+	  item = tree->right->info;
+	  B.Enqueue(item);	  
+	}else{
+	  if(levelCounter != maxHeight){
+	    B.Enqueue(-1);
+	  }
+	}		
       }
-      
+    }//end of while loop   
+    cout << endl; 
+    levelCounter++; //new level now
 
-      
+    while(!B.IsEmpty()){      
+      B.Dequeue(item);
+      cout << item << " ";
 
-
-
-
-    }
-
-
-
-
-
-
-
+      findNode(root, item, current, parent, found);
+      if(found){
+	tree=current;
+	if(tree-> left != NULL){
+	  item = tree->left->info;
+	  A.Enqueue(item);	  
+	}else{
+	   if(levelCounter != maxHeight){
+	    A.Enqueue(-1);
+	  }
+	}
+	
+	if(tree-> right != NULL){
+	  item = tree->right->info;
+	  A.Enqueue(item);	  
+	}else{
+	  if(levelCounter != maxHeight){
+	    A.Enqueue(-1);
+	  }	  
+	}		
+      }
+    }//end of while loop
+    levelCounter++;
+    cout << endl;
   }
-  
-  
-  
-  
-  
-
-
-  
 }
 
 TreeNode* ptrToSuccessor(TreeNode* tree){//Implement this function, you May use a data structure
