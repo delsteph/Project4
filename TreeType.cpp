@@ -322,15 +322,26 @@ void TreeType<ItemType>::PrintAncestors(int value) {
 	}
 	
 }
-
+TreeNode* ptrToSuccessor(TreeNode* tree);
 
 template <class ItemType>
 int TreeType<ItemType>::GetSuccessor(int value) {
 // Implement this function, You may call a helper function
 // Then Remove the following stub statement
 	cout << "GetSuccessor() has been called\n";
-	
-	return 0;//you should change this return statement
+    bool found=false;
+	TreeNode* tree = root;
+	TreeNode* currentPtr;
+	TreeNode* parentPtr;
+    TreeNode* succNode;
+    int succ = -1;
+    findNode(tree, value, currentPtr, parentPtr, found);
+    if(found==true){
+        succNode = ptrToSuccessor(currentPtr);
+        succ = succNode->info;
+    }
+    
+	return succ;//you should change this return statement
 }
 // helper function for Mirror Image
 
@@ -339,7 +350,15 @@ int TreeType<ItemType>::GetSuccessor(int value) {
 void mirror(TreeNode*& copy, const TreeNode* originalTree)
 // Post: copy is the root of a tree that is a mirror Image of originalTree.
 {
-
+    if(originalTree == NULL){
+        copy = NULL;
+    }
+    else{
+        copy = new TreeNode;
+        copy->info = originalTree->info;
+        mirror(copy->right, originalTree->left);
+        mirror(copy->left, originalTree->right);
+    }
 
   // implement this function
 }
@@ -348,6 +367,7 @@ void mirror(TreeNode*& copy, const TreeNode* originalTree)
 template <class ItemType>
 void TreeType<ItemType>::mirrorImage(TreeType& t)
 {
+    mirror(t.root,root);
 	// calls the helper function mirror
 }
    
@@ -416,14 +436,14 @@ void TreeType<ItemType>::LevelOrderPrint()const
 
   TreeNode* tree = root;
   ItemType item = tree->info;
-  
+  int i;
   A.Enqueue(item);
 
-  while(!A.isEmpty() || !B.isEmpty()){
-    while(!A.isEmpty()){ //first case
+  while(!A.IsEmpty() || !B.IsEmpty()){
+    while(!A.IsEmpty()){ //first case
 
       
-      tree->info = A.Dequeue();
+//    A.Dequeue(tree->info);
       cout << tree->info << endl;
       if(tree-> left != NULL){
 
@@ -446,7 +466,7 @@ void TreeType<ItemType>::LevelOrderPrint()const
 
   }
   
-
+  
   
   
   
@@ -454,7 +474,16 @@ void TreeType<ItemType>::LevelOrderPrint()const
 
   
 }
-	
+
 TreeNode* ptrToSuccessor(TreeNode* tree){//Implement this function, you May use a data structure
-	
+    if(tree==NULL){
+        return NULL;
+    }else{
+        TreeNode * location = tree->right;
+        while(location->left!=NULL){
+            location = location->left;
+        }
+        return location;
+    }
 }
+
