@@ -357,8 +357,10 @@ int TreeType<ItemType>::GetSuccessor(int value) {
     findNode(tree, value, currentPtr, parentPtr, found);
     if(found==true){
         succNode = ptrToSuccessor(currentPtr);
-        succ = succNode->info;
-    }
+        if(succNode != NULL){
+            succ = succNode->info;
+        }//else return no logical succesor
+    }//else return item not in tree
     
 	return succ;//you should change this return statement
 }
@@ -378,7 +380,6 @@ void mirror(TreeNode*& copy, const TreeNode* originalTree)
         mirror(copy->right, originalTree->left);
         mirror(copy->left, originalTree->right);
     }
-
   // implement this function
 }
 
@@ -386,7 +387,12 @@ void mirror(TreeNode*& copy, const TreeNode* originalTree)
 template <class ItemType>
 void TreeType<ItemType>::mirrorImage(TreeType& t)
 {
+//    TreeNode * point = t.root;
     mirror(t.root,root);
+    TreeNode * loc;
+    loc = t.root;
+    cout << loc->right->right->info <<" the info:: "<< endl;
+    
 	// calls the helper function mirror
 }
    
@@ -464,6 +470,7 @@ if(root !=NULL){
   TreeNode* tree = root;
   ItemType item = tree->info;
   int maxHeight= findHeight(tree);
+  cout << "height of tree:" << maxHeight;
    int levelCounter=0;
   A.Enqueue(item);
 
@@ -533,12 +540,15 @@ if(root !=NULL){
 }
 
 TreeNode* ptrToSuccessor(TreeNode* tree){//Implement this function, you May use a data structure
+    TreeNode* location = NULL;
     if(tree==NULL){
         return NULL;
     }else{
-        TreeNode * location = tree->right;
-        while(location->left!=NULL){
-            location = location->left;
+        if(tree->right!=NULL){
+            location = tree->right;
+            while(location->left!=NULL){
+                location = location->left;
+            }
         }
         return location;
     }
