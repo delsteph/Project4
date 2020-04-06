@@ -294,34 +294,42 @@ void TreeType<ItemType>::PrintAncestors(int value) {
 // Then Remove the following stub statement
 
 	bool found=false;
-	TreeNode* tree = root;
-	TreeNode* currentPtr;
-	TreeNode* parentPtr;
+	TreeNode* currentPtr=root;
+	TreeNode* parentPtr=NULL;
 
-	if (tree == NULL){
+	if (currentPtr == NULL){
 	  found = false;// item is not found.
 	  cout << "tree is empty";
+	}else if(value == currentPtr->info){
+	  cout << value << " is the root value. No ancestors." << endl;
 	}else{
-	  
-	  findNode(tree, value, currentPtr, parentPtr, found);
-	  currentPtr=NULL;
-	  parentPtr=NULL;
-	  
-	  if(found){
-	    
-	    while(parentPtr != NULL && currentPtr != NULL){
-	      
-	      findNode(tree, value, currentPtr, parentPtr, found);
-	      cout << parentPtr->info << " ";
-	      currentPtr = parentPtr;
-	    parentPtr = NULL;//parent is now current and then to find its parent
-	    value = currentPtr->info; //updated value
-	    
+	  	    
+	  while(currentPtr != NULL && !found){
+	    if(value < currentPtr->info){
+	      cout << currentPtr->info << " ";
+	      if(value > currentPtr->info && value < parentPtr->info){
+		  cout << value << " is not in the list.\n";
+		  break;
+	      }
+	      parentPtr = currentPtr;
+	      currentPtr = currentPtr->left;	      
+	    }else if(value >currentPtr->info){	      
+	      cout << currentPtr->info << " ";
+	      if(value > currentPtr->info && value < parentPtr->info){
+		cout << value << " is not in the list.\n";
+		break;
+	      }
+	      parentPtr = currentPtr;
+	      currentPtr = currentPtr->right;
 	    }
+	    else{
+	      found = true;
+	    }     
 	  }
 	}
-	
 }
+
+
 TreeNode* ptrToSuccessor(TreeNode* tree);
 
 template <class ItemType>
@@ -439,7 +447,7 @@ int findHeight(TreeNode* tree){ //helper method
 
 template <class ItemType>
 void TreeType<ItemType>::LevelOrderPrint()const{
-
+if(root !=NULL){
   QueType A;
   QueType B;
   TreeNode* tree = root;
@@ -509,6 +517,7 @@ void TreeType<ItemType>::LevelOrderPrint()const{
     }//end of while loop
     levelCounter++;
     cout << endl;
+   }	
   }
 }
 
