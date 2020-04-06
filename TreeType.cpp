@@ -220,23 +220,34 @@ void inOrderTraverse(TreeNode* tree)
 void preOrderTraverse(TreeNode* tree) 
 // Prints info member of items in tree in sorted order on screen.
 {
-  if (tree != NULL){
+  if(tree != NULL){
     cout << tree->info<<"  "; //print node first
-      preOrderTraverse(tree->right);  // Print right subtree.
-    preOrderTraverse(tree->left);   // Print left subtree.
-
+  
   }
+
+  if(tree != NULL && tree->left != NULL){
+    preOrderTraverse(tree->left);
+  }
+  if(tree != NULL && tree->right !=NULL){
+    preOrderTraverse(tree->right);
+  } 
 }
 
 void postOrderTraverse(TreeNode* tree) 
 // Prints info member of items in tree in sorted order on screen.
 {
-  if (tree != NULL){
-     postOrderTraverse(tree->right);  // Print right subtree.
-       postOrderTraverse(tree->left);   // Print left subtree.
-  
-	 cout << tree->info<<"  "; //print node first
+   if(tree != NULL && tree->left != NULL){
+    preOrderTraverse(tree->left);
   }
+  if(tree != NULL && tree->right !=NULL){
+    preOrderTraverse(tree->right);
+  } 
+    
+   if(tree != NULL){
+   
+      cout << tree->info<<"  "; //print node first
+  }  
+ 
 }
 
 
