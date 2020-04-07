@@ -1,5 +1,6 @@
 #include<iostream>
 #include<cmath>
+#include <iomanip>
 
 using namespace std;
 #include "TreeType.h"
@@ -474,25 +475,35 @@ int widthFinder(int maxHeight){
 
 template <class ItemType>
 void TreeType<ItemType>::LevelOrderPrint()const{
+
 if(root !=NULL){
-  QueType A;
-  QueType B;
+  QueType<ItemType> A;
+  QueType<ItemType> B;
   TreeNode* tree = root;
   ItemType item = tree->info;
   int maxHeight= findHeight(tree);
-  cout << "height of tree:" << maxHeight;
-   int levelCounter=0;
+  int frontSpace= widthFinder(maxHeight)*2; //whole tree needs to be at least the length of the bottom
+  int levelCounter=1;
   A.Enqueue(item);
+  int numDashes=0;
 
   while(!A.IsEmpty() || !B.IsEmpty()){
 
     TreeNode* current;
     TreeNode* parent;
-    bool found;  
-    while(!A.IsEmpty()){ //first case      
+    bool found;
+
+    std::cout << std::setw(frontSpace); 
+    while(!A.IsEmpty()){ //first case
+      numDashes++;
       A.Dequeue(item);
-      cout << item << " ";
+      if(item == -1){
+	cout << "-  ";
+      }else{
+	cout << item << "  ";
+      }
       findNode(root, item, current, parent, found);
+      
       if(found){
 	tree=current; //location is set
 	if(tree-> left != NULL){
@@ -513,26 +524,45 @@ if(root !=NULL){
 	  }
 	}		
       }
-    }//end of while loop   
-    cout << endl; 
+    }//end of A is empty while loop
     levelCounter++; //new level now
+    cout << endl;
+    frontSpace= frontSpace-1;
+    std::cout << std::setw(frontSpace); //dashes for children
+    while(numDashes!=0){
+      if(levelCounter != maxHeight+1){
+      cout << '/' << " " << '\\' << " ";
+      }
+      numDashes--;
+    }
+    cout << endl;
 
-    while(!B.IsEmpty()){      
+    frontSpace= frontSpace-1;
+    std::cout << std::setw(frontSpace);
+    
+    while(!B.IsEmpty()){ 
+        numDashes++;
+			   
       B.Dequeue(item);
-      cout << item << " ";
-
-      findNode(root, item, current, parent, found);
+       
+      if(item == -1){
+	cout << "-  ";
+      }else{
+	cout << item << "  ";
+      }
+      
+      
+     findNode(root, item, current, parent, found);
       if(found){
 	tree=current;
 	if(tree-> left != NULL){
 	  item = tree->left->info;
 	  A.Enqueue(item);	  
 	}else{
-	   if(levelCounter != maxHeight){
+	  if(levelCounter != maxHeight){
 	    A.Enqueue(-1);
 	  }
-	}
-	
+	}	
 	if(tree-> right != NULL){
 	  item = tree->right->info;
 	  A.Enqueue(item);	  
@@ -545,8 +575,20 @@ if(root !=NULL){
     }//end of while loop
     levelCounter++;
     cout << endl;
-   }	
-  }
+    frontSpace= frontSpace-1;
+    std::cout << std::setw(frontSpace); //dashes for children
+   
+    while(numDashes!=0){
+      if(levelCounter != maxHeight+1){
+      cout << '/' << " " << '\\' << " ";
+      }
+      numDashes--;
+    }
+    frontSpace= frontSpace-1;
+    cout<< endl;
+     
+  } //end of huge while loop
+ }
 }
 
 TreeNode* ptrToSuccessor(TreeNode* tree){//Implement this function, you May use a data structure
