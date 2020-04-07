@@ -461,6 +461,12 @@ int findHeight(TreeNode* tree){ //helper method
   return max(findHeight(tree-> left),findHeight(tree->right)) +1;
 }
 
+int widthFinder(int maxHeight){
+  
+  int width = pow(2.0, maxHeight-1);
+  return width;
+
+}
 
 
 template <class ItemType>
