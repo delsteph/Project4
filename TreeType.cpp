@@ -174,7 +174,7 @@ void DeleteNode(TreeNode*& tree)
 //       deleted; otherwise, the user's data is replaced by its 
 //       logical predecessor and the predecessor's node is deleted.
 {
-  ItemType data;
+ ItemType data;
   TreeNode* tempPtr;
 
   tempPtr = tree;
@@ -190,9 +190,10 @@ void DeleteNode(TreeNode*& tree)
   }
   else
   {
-    GetPredecessor(tree->left, data);
+    TreeNode* pointer = ptrToSuccessor(tree);
+    data = pointer->info;
     tree->info = data;
-    Delete(tree->left, data);  // Delete predecessor node.
+    Delete(tree, data); 
   }
 }
 //Helper function for DeleteNode
