@@ -12,3 +12,13 @@ The implementation defines three queues to store tree items according to travers
  	preQue:  contains the tree items in preorder.
  	inQue:   contains the tree items in inorder.
 	postQue: contains the tree items in postorder.
+	
+	
+To compile and execute the program, we have a Makefile which you just use the commands:
+$ make compile
+
+to compile all the files and then 
+
+$ make run
+
+to run the executable.
