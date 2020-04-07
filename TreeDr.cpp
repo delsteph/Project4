@@ -137,11 +137,14 @@ int main()
 	  //15
 	  else if (command == "MakeTree")
 	  {
-	  
-	  int array[100], length;
-	    inFile >> length;
-		  for (int i = 0; i < length; i++)
-			  inFile >> array[i];
+	          int arrt[100];
+          int length;
+          inFile >> length;
+          for (int i = 0; i < length; i++){
+              inFile >> arrt[i];
+          }
+          TreeType tree1 = makeTree(arrt, length-1);
+          tree1.LevelOrderPrint();
      // After implementing makeTree
 	// Remove the follwoing comment to call the function
 	//	  TreeType balancedTree=makeTree(array, length);
@@ -158,7 +161,7 @@ int main()
 // implement this function
 // you may define and call helper functions.
 // The helper function could be an iterative or a recursive function.
-void arrayToTree(int arr[], int start, int end, TreeType<int>& bt){
+void arrayToTree(int arr[], int start, int end, TreeType& bt){
     if(start>end){
         
     }
@@ -172,9 +175,9 @@ void arrayToTree(int arr[], int start, int end, TreeType<int>& bt){
     }
 }
 
-TreeType<int> makeTree(int arr[], int size)
+TreeType makeTree(int arr[], int size)
 {
-    TreeType<int> balancedTree;
+    TreeType balancedTree;
 //    balancedTree.MakeEmpty();
     arrayToTree(arr, 0, size, balancedTree);
 //    balancedTree.LevelOrderPrint();
