@@ -158,15 +158,31 @@ int main()
 // implement this function
 // you may define and call helper functions.
 // The helper function could be an iterative or a recursive function.
-TreeType<int>& makeTree(int arr[], int size)
+void arrayToTree(int arr[], int start, int end, TreeType<int>& bt){
+    if(start>end){
+        
+    }
+    else{
+        int mid = (start+end)/2;
+//        cout << mid << endl;
+        int i = arr[mid];
+        bt.PutItem(i);
+        arrayToTree(arr, start, mid-1, bt);
+        arrayToTree(arr, mid+1, end, bt);
+    }
+}
+
+TreeType<int> makeTree(int arr[], int size)
 {
-  TreeType<int> balancedTree;
+    TreeType<int> balancedTree;
+//    balancedTree.MakeEmpty();
+    arrayToTree(arr, 0, size, balancedTree);
+//    balancedTree.LevelOrderPrint();
 	// Code to add array items in balancedTree
 	//Write your code
 	cout << "MakeTree has been called";
-	//remove this statement from implementation
+	//remove this statement from implementation*/
 	return balancedTree;
 }
-
 
 
