@@ -7,7 +7,7 @@ struct TreeNode
   TreeNode* left;
   TreeNode* right;
 };
-
+void CopyTree(TreeNode*& copy,  const TreeNode* originalTree);
 template<class ItemType>
 TreeType<ItemType>::TreeType()
 {
@@ -18,7 +18,7 @@ template<class ItemType>
 TreeType<ItemType>::TreeType(const TreeType& originalTree)
 {
 
-  this.root = originalTree.root;
+    CopyTree(root, originalTree.root);
 }
 
 void Destroy(TreeNode*& tree);
@@ -442,10 +442,10 @@ void TreeType<ItemType>::operator=(const TreeType& originalTree)
 // into root.
 {
   {
-  if (&originalTree == this)
-    return;             // Ignore assigning self to self
-  Destroy(root);      // Deallocate existing tree nodes
-  CopyTree(root, originalTree.root);
+      //if (&originalTree == this)
+      //     return;             // Ignore assigning self to self
+      //Destroy(root);      // Deallocate existing tree nodes
+      CopyTree(originalTree.root, root);
   }
 
 }
