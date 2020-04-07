@@ -192,10 +192,11 @@ void DeleteNode(TreeNode*& tree)
   }
   else
   {
-    TreeNode* pointer = ptrToSuccessor(tree);
-    data = pointer->info;
-    tree->info = data;
-    Delete(tree, data); 
+     TreeNode* pointer = ptrToSuccessor(tree);//
+
+    tempPtr->info = pointer->info;
+
+    delete pointer; 
   }
 }
 //Helper function for DeleteNode
