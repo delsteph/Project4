@@ -1,4 +1,6 @@
 #include<iostream>
+#include<cmath>
+
 using namespace std;
 #include "TreeType.h"
 struct TreeNode
