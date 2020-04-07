@@ -1,11 +1,9 @@
+
 #include <string>
 #include <fstream>
-//typedef int ItemType;
-
+typedef int ItemType;
 struct TreeNode;
 #include "QueType.cpp"
-
-template <class ItemType>
 class TreeType
 {
 public:
@@ -32,4 +30,5 @@ private:
   TreeNode* root;
   
 };
+
 
